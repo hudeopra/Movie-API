@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>IMDb Rating</title>
+        <meta name="description" content="">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <style>
+            .fa{
+                color: rgb(0, 255, 47);
+                font: normal normal normal 14px/1 FontAwesome;
+            }
+            body{
+                margin: 0;
+                font-family: 'Josefin Sans', sans-serif;
+                font-size: 18px;
+                background-color: #333;
+                color: #fff;
+                line-height: 1.5;
+            }
+            table{
+                max-width: 1200px;
+                margin: 0px auto 100px;
+            }
+            thead{
+                position: sticky;
+                background-color: #333;
+                top: 0;
+            }
+            th{
+                font-size: 20px;
+            }
+            td{
+                
+    vertical-align: top;
+            }
+            h1{
+                text-align: center;
+                margin-top: 50px;
+            }
+            h2{
+                margin-top: 0;
+            }
+            img{
+                height: 100%;
+                width: 100%;
+                max-width: 250px;
+                object-fit: cover;display: block;
+                margin-bottom: 20px;
+            }
+            h2{
+                margin-top: 20px;
+                margin-bottom: 0;
+            }
+            h2:first-of-type{
+                margin-top: 0;
+            }
+            
+            .center{
+                text-align: center;
+                margin: 50px 0;
+            }
+            main{
+                height: calc(100vh - 150px);
+            }.movielist{
+                opacity: 0;
+                visibility: hidden;
+                transition: all .5s;
+            }
+            .movielist.active{
+                visibility: visible;
+                opacity: 1;
+            }
+        </style>
+    </head>
+    <body> 
+        <header>
+        </header>
+        <main>
+            <!--  -->
+            <section class="center">
+                <h2>Search Your Movie Here</h2>
+                <input id ="movieName">
+                <button id="search">Search</button>
+            </section>
+            <section class="movielist">
+                <h1> My Movie List</h1>
+                <table border="1px" cellpadding="15px" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                Movie Name & Cover
+                            </th>
+                            <th width="500px">
+                                Discription 
+                            </th>
+                            <th width="300px">
+                                Crew
+                            </th>
+                            <th width="100px">
+                                Rating
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="movieImg">
+                            </td>
+                            <td id="discription">
+                            </td>
+                            <td id="director">
+                            </td>
+                            <td id="rating">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+        <footer style="background:#333;color:#fff; text-align:center; padding: 15px">
+            <p>
+                Copyright © 2023. All Rights Reserved By Prabin Hudeo Maharjan. 
+            </p>
+        </footer>
+        
+        <script>
+
+            function movie(){
+                const title = document.getElementById("movieName").value;
+                const apikey = "d543a1d9";
+                const url = `https://www.omdbapi.com/?t=${title}&apikey=d543a1d9`;
+                fetch(url)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    discription.innerHTML = `${data.Plot}<br> 
+                    <h2>Genre</h2> ${data.Genre}
+                    <h2>Released on</h2> ${data.Year}`;
+                    director.innerHTML = `<h2>Director</h2> ${data.Director}<br>
+                    <h2>Actors</h2> ${data.Actors}<br>
+                    <h2>Writers</h2> ${data.Writer}`;
+                    rating.innerHTML = `${data.imdbRating}`;
+                    movieImg.innerHTML = `<img src="${data.Poster}">
+                    <h2>${data.Title}</h2> `
+                });
+
+            }
+            document.getElementById("search").addEventListener("click", movie);
+
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script src="main.js">
+        </script>
+    </body>
+</html>
